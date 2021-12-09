@@ -61,6 +61,7 @@
         <table id="table_id" class="display" style="width:75%">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Symbol</th>
                     <th>Name</th>
                     <th>coinType</th>
@@ -94,10 +95,16 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "JSON",
                     success: function (res) {
-                        
+
+
+                        //console.log(res)
                         var table = $('#table_id').DataTable({
                             data: res,
+                            "rowCallback": function( row, data ) {
+                                $('td:eq(0)', row).html( "<img src='starNotFilled.png' width='40' height='40'>" );
+                            },
                             columns: [
+                                
                                 { data: "symbol" },
                                 { data: "name" },
                                 { data: "coinType" },
@@ -107,11 +114,6 @@
                                 { data: "txFee" }
                             ]
                         });
-                        // po naciśnięsiu na wiersz dodaje do localstorage
-                        // trzeba dodać kolumnę z gwiazdkami jakoś żeby 
-                        // klikając na nie dodawać do ulubionych a nie na wiersze
-                        // po naciśnięciu na giwazdka podmieniamy obrazki, wiadomo :p
-                        
                         $('#table_id tbody').on('click', 'tr', function () {
                             
                             var data = table.row( this ).data();
@@ -126,8 +128,6 @@
                                 favTable.push(data['symbol'])
                                 localStorage.setItem("favObjects", JSON.stringify(favTable))
                                 console.log(favTable);
-                                //location.reload(true);
-                            //zapisywanie do localstorage tablicy obiektów zaznaczonych 
                         } );
                     },
                     error: function (res) {
