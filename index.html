@@ -94,6 +94,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "JSON",
                     success: function (res) {
+                        
                         var table = $('#table_id').DataTable({
                             data: res,
                             columns: [
@@ -110,21 +111,22 @@
                         // trzeba dodać kolumnę z gwiazdkami jakoś żeby 
                         // klikając na nie dodawać do ulubionych a nie na wiersze
                         // po naciśnięciu na giwazdka podmieniamy obrazki, wiadomo :p
-
+                        
                         $('#table_id tbody').on('click', 'tr', function () {
+                            
                             var data = table.row( this ).data();
+                            console.log(data)
                             //sprawdzanie duplikatów 
                             for (var i in favTable) {
-                                if (favTable[i] === data){
+                                if (favTable[i] === data['symbol']){
                                     alert("duplikat!", favTable[i])
                                     return;
                                     }
                             }
-                            
-                                favTable.push(data)
+                                favTable.push(data['symbol'])
                                 localStorage.setItem("favObjects", JSON.stringify(favTable))
                                 console.log(favTable);
-                            
+                                //location.reload(true);
                             //zapisywanie do localstorage tablicy obiektów zaznaczonych 
                         } );
                     },

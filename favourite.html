@@ -72,7 +72,11 @@
         </table>
     </div>  
     <script type="text/javascript">
+        const daneCoin = [];
         $(document).ready(function () {
+
+
+
             $(".navElementHover").hover(
                 function(){ $(this).animate({
                     height: "60px"
@@ -81,38 +85,51 @@
                     height: "45px"
                     }, 100);}
             );
-           
+             // tablica coinow z api
             // Use the given data to create the table and display it
             $(function () {
+                var table = $('#example').DataTable();
+                var daneCoin = [];
                 var favTable = JSON.parse(localStorage.getItem("favObjects")) || [];
-                var table = $('#example').DataTable({
-                    data: favTable,
-                    columns: [
-                    { data: "symbol" },
-                    { data: "name" },
-                    { data: "coinType" },
-                    { data: "status" },
-                    { data: "notice" },
-                    { data: "minConfirmations" },
-                    { data: "txFee" }
-                    ]
-                });
-                //usuwanie z ulubionych 
-                $('#example tbody').on('click', 'tr', function () {
-                    var data = table.row( this ).data();
-                    console.log(data)
-                        //usuwam to co kliknę z tablicy
-                        favTable.pop(data)
-                        //usuwam cały localstorage
-                        localStorage.removeItem(JSON.stringify(data))
-                        //dodaję na nowo localstorage bez klikniętego
+                //var iterator = favTable.values();
+                favTable.forEach(function(item, index, array) {        
+                    $.ajax({
+                    type: "GET",
+                    url: "https://cors-anywhere.herokuapp.com/https://api.bittrex.com/v3/currencies/" + item,
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    success: function (res) {
+                        //console.log(url)
+                        daneCoin.push(res);
+                        table.row.add([
+                             res.symbol,
+                             res.name,
+                             res.coinType,
+                             res.status,
+                             res.notice,
+                             res.minConfirmations,
+                             res.txFee
+                        ]
+                        ).draw(false); 
+                    },
+                    error: function (res) {
+
+                    }
+                    });
+                }); 
+                $('#example tbody').on('dblclick', 'tr', function () {
+                var data = table.row( this ).data();
+                for (var i in favTable) {
+                    if (favTable[i] === data[0]){
+                        favTable.splice(i,1)
                         localStorage.setItem("favObjects", JSON.stringify(favTable))
-                        console.log(favTable);
-                        //odświeżam tabelę
+                        alert("Usunięto z ulubionych", favTable[i])
                         location.reload(true);
-                    //localStorage.removeItem('AddToFav');
-                    //zapisywanie do localstorage tablicy obiektów zaznaczonych 
-                } );
+                        return;
+                    }
+                }
+                });    
             });
         });
     </script>
