@@ -97,14 +97,19 @@
                     success: function (res) {
 
 
-                        //console.log(res)
+                        console.log(res)
                         var table = $('#table_id').DataTable({
                             data: res,
                             "rowCallback": function( row, data ) {
                                 $('td:eq(0)', row).html( "<img src='starNotFilled.png' width='40' height='40'>" );
+                                for (var i in favTable) {
+                                    if (favTable[i] === data['symbol']){
+                                        $('td:eq(0)', row).html( "<img src='starFilled.png' width='40' height='40'>" );
+                                    } 
+                                }
                             },
                             columns: [
-                                
+                                { data: "symbol" },
                                 { data: "symbol" },
                                 { data: "name" },
                                 { data: "coinType" },
@@ -114,7 +119,8 @@
                                 { data: "txFee" }
                             ]
                         });
-                        $('#table_id tbody').on('click', 'tr', function () {
+                        
+                        $('#table_id tbody tr').on('click', 'td:eq(0)', function () {
                             
                             var data = table.row( this ).data();
                             console.log(data)
@@ -125,13 +131,16 @@
                                     return;
                                     }
                             }
+                                
                                 favTable.push(data['symbol'])
                                 localStorage.setItem("favObjects", JSON.stringify(favTable))
+                                location.reload(true);
                                 console.log(favTable);
                         } );
                     },
                     error: function (res) {
                     }
+                    
                 });
             });
         });

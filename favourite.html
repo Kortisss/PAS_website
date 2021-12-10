@@ -60,7 +60,7 @@
     </h6>
 
     <div class="container-md bg-light mg-5 mt-5 p-5 shadow rounded" id="here">
-        <table id="example" class="display" style="width:75%">
+        <table id="table_id" class="display" style="width:75%">
             <thead>
                 <tr>
                     <th></th>
@@ -86,9 +86,10 @@
                     }, 100);}
             );
             $(function () {
-                var table = $('#example').DataTable();
+                var table = $('#table_id').DataTable();
                 //var daneCoin = [];
                 var favTable = JSON.parse(localStorage.getItem("favObjects")) || []; 
+                console.log(favTable);
                 favTable.forEach(function(item, index, array) {        
                     $.ajax({
                     type: "GET",
@@ -97,7 +98,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "JSON",
                     success: function (res) {
-                        //console.log(res);
+                        
                         Object.defineProperty(res, 'Ikona', {//ikona: 0=nie-ulubione 1=ulubione
                             value: "<img src='starFilled.png' width='40' height='40'>"
                         })
@@ -120,10 +121,12 @@
                     }
                     });
                 }); 
-                $('#example tbody').on('dblclick', 'tr', function () {
+                
+                $('#table_id tbody').on('click',"td:eq(0)", function () { 
                 var data = table.row( this ).data();
+                console.log(data)
                 for (var i in favTable) {
-                    if (favTable[i] === data[0]){
+                    if (favTable[i] === data[1]){
                         
                         favTable.splice(i,1)
                         localStorage.setItem("favObjects", JSON.stringify(favTable))
