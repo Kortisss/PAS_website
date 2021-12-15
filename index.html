@@ -33,16 +33,7 @@
         <a class="navbar-brand mr-auto ml-5" href="index.html">
             <img src="blockchain.png" width="60" height="60" class="" alt="">
         </a>
-        <a class="navbar-brand navElementHover" >
-            <img src="starNotFilled.png" width="40" height="40" class="" alt="">
-        </a>
-        <a class="navbar-brand navElementHover">
-            <img src="starNotFilled.png" width="40" height="40" class="" alt="">
-        </a>
-        <a class="navbar-brand navElementHover">
-            <img src="starNotFilled.png" width="40" height="40" class="" alt="">
-        </a>
-        <a class="navbar-brand navElementHover">
+        <a class="navbar-brand navElementHover" href="chart.html">
             <img src="chart.png" width="40" height="40" class="" alt="">
         </a>
         <a class="navbar-brand navElementHover mr-5" href="favourite.html">
@@ -122,7 +113,6 @@
                             ]
                         });
                         $('#table_id tbody tr').on('click', 'td:eq(0)', function () {
-                            
                             var data = table.row( this ).data();
                             console.log(data)
                             //sprawdzanie duplikatów 
@@ -132,11 +122,10 @@
                                     return;
                                     }
                             }
-                                
-                                favTable.push(data['symbol'])
-                                localStorage.setItem("favObjects", JSON.stringify(favTable))
-                                location.reload(true);
-                                console.log(favTable);
+                            favTable.push(data['symbol'])
+                            localStorage.setItem("favObjects", JSON.stringify(favTable))
+                            location.reload(true);
+                            console.log(favTable);
                         } );
                     },
                     error: function (res) {

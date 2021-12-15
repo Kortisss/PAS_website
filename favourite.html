@@ -35,16 +35,7 @@
         <a class="navbar-brand mr-auto ml-5" href="index.html">
             <img src="blockchain.png" width="60" height="60" class="" alt="">
         </a>
-        <a class="navbar-brand navElementHover" >
-            <img src="starNotFilled.png" width="40" height="40" class="" alt="">
-        </a>
-        <a class="navbar-brand navElementHover">
-            <img src="starNotFilled.png" width="40" height="40" class="" alt="">
-        </a>
-        <a class="navbar-brand navElementHover">
-            <img src="starNotFilled.png" width="40" height="40" class="" alt="">
-        </a>
-        <a class="navbar-brand navElementHover">
+        <a class="navbar-brand navElementHover" href="chart.html">
             <img src="chart.png" width="40" height="40" class="" alt="">
         </a>
         <a class="navbar-brand navElementHover mr-5" href="index.html">
@@ -60,10 +51,11 @@
     </h6>
 
     <div class="container-md bg-light mg-5 mt-5 p-5 shadow rounded" id="here">
+        <H6><p style="color: rgba(171,171,171,1);"> Aby usunąć z ulubionych kliknij dwa razy na wiersz. </p></H6>
+
         <table id="table_id" class="display" style="width:75%">
             <thead>
                 <tr>
-                    <th></th>
                     <th>Symbol</th>
                     <th>Name</th>
                     <th>coinType</th>
@@ -86,8 +78,7 @@
                     }, 100);}
             );
             $(function () {
-                var table = $('#table_id').DataTable();
-                //var daneCoin = [];
+                var table = $('#table_id').DataTable({paging: false});
                 var favTable = JSON.parse(localStorage.getItem("favObjects")) || []; 
                 console.log(favTable);
                 favTable.forEach(function(item, index, array) {        
@@ -98,14 +89,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "JSON",
                     success: function (res) {
-                        
-                        Object.defineProperty(res, 'Ikona', {//ikona: 0=nie-ulubione 1=ulubione
-                            value: "<img src='starFilled.png' width='40' height='40'>"
-                        })
-                        //console.log(res);
-                        //daneCoin.push(res);
                         table.row.add([
-                            res.Ikona,
                             res.symbol,
                             res.name,
                             res.coinType,
@@ -121,13 +105,12 @@
                     }
                     });
                 }); 
-                
-                $('#table_id tbody').on('click',"td:eq(0)", function () { 
+
+                $('#table_id tbody').on('dblclick',"tr", function () { 
                 var data = table.row( this ).data();
                 console.log(data)
                 for (var i in favTable) {
-                    if (favTable[i] === data[1]){
-                        
+                    if (favTable[i] === data[0]){
                         favTable.splice(i,1)
                         localStorage.setItem("favObjects", JSON.stringify(favTable))
                         alert("Usunięto z ulubionych", favTable[i])
@@ -135,7 +118,7 @@
                         return;
                     }
                 }
-                });    
+                });
             });
         });
     </script>

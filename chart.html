@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kryptowaluty</title>
+    <!-- Include Bootstrap for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Include the Bootstrap Table CSS for the table -->
+    <link href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+    <!-- dataTable -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+</head>
+<style>
+    body {
+        background: rgb(237, 237, 237);
+        background: -webkit-linear-gradient(180deg, rgba(237, 237, 237, 1) 0%, rgba(171, 171, 171, 1) 100%);
+        background: -moz-linear-gradient(180deg, rgba(237, 237, 237, 1) 0%, rgba(171, 171, 171, 1) 100%);
+        background: -ms-linear-gradient(180deg, rgba(237, 237, 237, 1) 0%, rgba(171, 171, 171, 1) 100%);
+        background: -o-linear-gradient(180deg, rgba(237, 237, 237, 1) 0%, rgba(171, 171, 171, 1) 100%);
+        background: linear-gradient(180deg, rgba(237, 237, 237, 1) 0%, rgba(171, 171, 171, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ababab', GradientType=0);
+        background-attachment: fixed;
+    }
+</style>
+
+<body>
+    
+    <nav class="navbar ">
+        <a class="navbar-brand mr-auto ml-5" href="index.html">
+            <img src="blockchain.png" width="60" height="60" class="" alt="">
+        </a>
+        <a class="navbar-brand navElementHover" href="index.html">
+            <img src="home.png" width="40" height="40" class="" alt="">
+        </a>
+        <a class="navbar-brand navElementHover mr-5" href="favourite.html">
+            <img src="user.png" width="40" height="40" class="" alt="">
+        </a>
+    </nav>
+    <!-- Image and text -->
+    <h1 class="text  text-center ">
+        Kryptowaluty
+    </h1>
+    <h6 class="text  text-center">
+        Przyszłość internetu
+    </h6>
+    <div class="container-md bg-light mg-5 mt-5 p-5 shadow rounded">
+    <main class="main-page">
+        <div class="tradingview-widget-container">
+            <div id="tradingview_f4310"></div>
+            <div class="tradingview-widget-copyright"><a href="https://pl.tradingview.com/chart/"
+                    rel="noopener" target="_blank"><span class="blue-text">wykres</span></a> od TradingView</div>
+            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+            <script type="text/javascript">
+                new TradingView.widget(
+                    {
+                        "width": 980,
+                        "height": 610,
+                        "symbol": "BTCUSD",
+                        "interval": "D",
+                        "timezone": "Etc/UTC",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "pl",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview_f4310"
+                    }
+                );
+            </script>
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".navElementHover").hover(
+                function(){ $(this).animate({
+                    height: "60px"
+                    }, 100);},
+                function(){ $(this).animate({
+                    height: "45px"
+                    }, 100);}
+            );
+                 } );
+    </script>
+
+
+</body>
+
+</html>
