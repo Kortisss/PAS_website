@@ -67,6 +67,9 @@
     <script type="text/javascript">
         //animacja ikon na navbarze
         $(document).ready(function () {
+
+
+
             $(".navElementHover").hover(
                 function(){ $(this).animate({
                     height: "60px"
@@ -129,8 +132,19 @@
                         } );
                     },
                     error: function (res) {
+                        if (res.readyState == 4 && res.status == 403) {
+                            
+                            if (confirm("Aktywuj serwer proxy w celu poprawnego funkcjonowania strony.") == true) {
+                                window.open(
+                                'https://cors-anywhere.herokuapp.com/',
+                                '_blank' // <- This is what makes it open in a new window.
+                                );
+                                //location.href="https://cors-anywhere.herokuapp.com/", '_blank';
+                            } else {
+                                location.reload(true); 
+                            }
+                        }
                     }
-                    
                 });
             });
         });
